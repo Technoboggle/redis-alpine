@@ -1,0 +1,1 @@
+docker build -f build-redis.Dockerfile -t alpine-redis:6.0.9 .
