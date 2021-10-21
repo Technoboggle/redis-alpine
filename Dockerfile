@@ -1,4 +1,9 @@
-FROM alpine:3.14
+FROM alpine:3.14.2
+LABEL net.technoboggle.authorname="Edward Finlayson" \
+      net.technoboggle.authors="edward.finlayson@btinternet.com" \
+      net.technoboggle.version="0.1" \
+      net.technoboggle.description="This image builds a PHP-fpm server" \
+      net.technoboggle.buildDate=$buildDate
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis
@@ -10,9 +15,10 @@ RUN apk add --no-cache \
 # add tzdata for https://github.com/docker-library/redis/issues/138
     tzdata
 
-ENV REDIS_VERSION 6.2.2
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-6.2.5.tar.gz
-ENV REDIS_DOWNLOAD_SHA 4b9a75709a1b74b3785e20a6c158cab94cf52298aa381eea947a678a60d551ae
+ENV REDIS_VERSION 6.2.6
+ENV REDIS_DOWNLOAD_URL "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
+ENV REDIS_DOWNLOAD_SHA 5b2b8b7a50111ef395bf1c1d5be11e6e167ac018125055daa8b5c2317ae131ab 
+
 
 RUN set -eux; \
     apk --no-cache upgrade musl &&\
