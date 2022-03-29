@@ -1,9 +1,31 @@
-FROM alpine:3.15.0
+FROM alpine:3.15.3
+
+LABEL maintainer="edward.finlayson@btinternet.com"
+
+ARG buildDate
+
 LABEL net.technoboggle.authorname="Edward Finlayson" \
       net.technoboggle.authors="edward.finlayson@btinternet.com" \
       net.technoboggle.version="0.1" \
       net.technoboggle.description="This image builds a PHP-fpm server" \
-      net.technoboggle.buildDate=$buildDate
+      net.technoboggle.buildDate=$BUILD_DATE
+
+# Technoboggle Build time arguments.
+ARG BUILD_DATE
+ARG VCS_REF
+ARG BUILD_VERSION
+
+# Labels.
+LABEL org.label-schema.schema-version="1.0"
+LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.name="Technoboggle/redis-alpine"
+LABEL org.label-schema.description="Technoboggle lightweight Redis node"
+LABEL org.label-schema.url="http://technoboggle.com/"
+LABEL org.label-schema.vcs-url="https://github.com/Technoboggle/redis-alpine"
+LABEL org.label-schema.vcs-ref=$VCS_REF
+LABEL org.label-schema.vendor="WSO2"
+LABEL org.label-schema.version=$BUILD_VERSION
+LABEL org.label-schema.docker.cmd="docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:6.2.6-3.15.0"
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis
@@ -95,14 +117,15 @@ RUN set -eux; \
   apk del --no-network .build-deps; \
   \
   redis-cli --version; \
-  redis-server --version
+  redis-server --version; \
+  mkdir /data; \
+  chown redis:redis /data;
 
-RUN mkdir /data && chown redis:redis /data
-VOLUME /data
-WORKDIR /data
+#VOLUME /data
+WORKDIR /usr/local/bin/
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-EXPOSE 6379
-CMD ["redis-server"]
+EXPOSE 6279
+#CMD ["redis-server /usr/local/etc/redis/redis.conf"]
