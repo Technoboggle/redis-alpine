@@ -1,6 +1,5 @@
 .git
 .dockerignore
-*Dockerfile*
 *docker-compose*
 # comment
 */temp*
