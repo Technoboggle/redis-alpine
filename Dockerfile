@@ -1,4 +1,4 @@
-FROM alpine:3.15.3
+FROM alpine:latest
 
 LABEL maintainer="edward.finlayson@btinternet.com"
 
