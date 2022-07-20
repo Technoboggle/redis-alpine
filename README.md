@@ -14,7 +14,7 @@ find $(pwd) -type f \( -iname \*.sh -o -iname \*.py \) -exec chmod ugo+x {} \;
 
 
 docker build -f Dockerfile --progress=plain -t technoboggle/redis-alpine:6.2.6-3.15.3 --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg VCS_REF=7aa4f4fed2822afd7ae0f083526aaba6ea502ca9 --build-arg BUILD_VERSION=0.04 --no-cache --progress=plain .
-docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:6.2.6-3.15.3
+docker run -it -d -p 16279:6279 --rm --name myredis technoboggle/redis-alpine:6.2.6-3.15.3
 docker tag technoboggle/redis-alpine:6.2.6-3.15.3 technoboggle/redis-alpine:latest
 docker login
 docker push technoboggle/redis-alpine:6.2.6-3.15.3

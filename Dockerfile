@@ -1,4 +1,4 @@
-FROM alpine:3.15.3
+FROM alpine:3.15.5
 
 LABEL maintainer="edward.finlayson@btinternet.com"
 
@@ -14,6 +14,11 @@ LABEL net.technoboggle.authorname="Edward Finlayson" \
 ARG BUILD_DATE
 ARG VCS_REF
 ARG BUILD_VERSION
+ENV ALPINE_VERSION 3.15.5
+ENV REDIS_VERSION 7.0.4
+ENV REDIS_DOWNLOAD_URL "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
+ENV REDIS_DOWNLOAD_SHA f0e65fda74c44a3dd4fa9d512d4d4d833dd0939c934e946a5c622a630d057f2f 
+
 
 # Labels.
 LABEL org.label-schema.schema-version="1.0"
@@ -25,24 +30,20 @@ LABEL org.label-schema.vcs-url="https://github.com/Technoboggle/redis-alpine"
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.vendor="WSO2"
 LABEL org.label-schema.version=$BUILD_VERSION
-LABEL org.label-schema.docker.cmd="docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:6.2.6-3.15.0"
+LABEL org.label-schema.docker.cmd="docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:${REDIS_VERSION}-${ALPINE_VERSION}"
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis
+RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
 # alpine already has a gid 999, so we'll use the next id
-
-RUN apk add --no-cache \
+  \
+    apk add --no-cache \
 # grab su-exec for easy step-down from root
     'su-exec>=0.2' \
 # add tzdata for https://github.com/docker-library/redis/issues/138
-    tzdata
-
-ENV REDIS_VERSION 6.2.6
-ENV REDIS_DOWNLOAD_URL "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
-ENV REDIS_DOWNLOAD_SHA 5b2b8b7a50111ef395bf1c1d5be11e6e167ac018125055daa8b5c2317ae131ab 
-
-
-RUN set -eux; \
+    tzdata; \
+  \
+  \
+    set -eux; \
     apk --no-cache upgrade musl &&\
     apk add --no-cache --virtual .build-deps \
     coreutils \
@@ -125,7 +126,7 @@ RUN set -eux; \
 WORKDIR /usr/local/bin/
 
 COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+#ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6279
 #CMD ["redis-server /usr/local/etc/redis/redis.conf"]
