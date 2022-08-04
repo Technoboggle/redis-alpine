@@ -1,22 +1,4 @@
 
-[![Known Vulnerabilities](https://snyk.io/test/github/Technoboggle/redis-alpine/badge.svg)](https://snyk.io/test/github/Technoboggle/redis-alpine)
-
-![Trueosiris Rules](https://img.shields.io/badge/trueosiris-rules-f08060)
-[![Docker Pulls](https://badgen.net/docker/pulls/technoboggle/redis-alpine?icon=docker&label=pulls)](https://hub.docker.com/r/technoboggle/redis-alpine/)
-[![Docker Stars](https://badgen.net/docker/stars/technoboggle/redis-alpine?icon=docker&label=stars)](https://hub.docker.com/r/technoboggle/redis-alpine/)
-[![Docker Image Size](https://badgen.net/docker/size/technoboggle/redis-alpine?icon=docker&label=image%20size)](https://hub.docker.com/r/technoboggle/redis-alpine/)
-
-![Github stars](https://badgen.net/github/stars/technoboggle/redis-alpine?icon=github&label=stars)
-
-![Github forks](https://badgen.net/github/forks/technoboggle/redis-alpine?icon=github&label=forks)
-
-![Github issues](https://img.shields.io/github/issues/Technoboggle/redis-alpine)
-
-![Github last-commit](https://img.shields.io/github/last-commit/Technoboggle/redis-alpine)
-
-
-
-
 #####################################################################
 # use the following commands to build image and upload to dockerhub #
 ```
