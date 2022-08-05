@@ -20,10 +20,10 @@ docker build -f Dockerfile -t technoboggle/redis-alpine:"$redis_ver-$alpine_ver"
 #--progress=plain 
 
 docker run -it -d --rm -p 16279:6279 --rm --name myredis technoboggle/redis-alpine:"$redis_ver-$alpine_ver"
-docker tag technoboggle/redis-alpine:"$redis_ver-$alpine_ver" technoboggle/redis-alpine:latest
+#docker tag technoboggle/redis-alpine:"$redis_ver-$alpine_ver" technoboggle/redis-alpine:latest
 docker login
 docker push technoboggle/redis-alpine:"$redis_ver-$alpine_ver"
-docker push technoboggle/redis-alpine:latest
-#docker container stop -t 10 myredis
+#docker push technoboggle/redis-alpine:latest
+docker container stop -t 10 myredis
 
 cd "$owd"

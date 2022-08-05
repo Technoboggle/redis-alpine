@@ -34,3 +34,6 @@ docker container stop -t 10 myredis
 export BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') && docker-compose -f docker-compose.yml build --force-rm --no-cache --progress=plain redis
 
 docker-compose -f docker-compose.yml up -d redis
+
+
+deprecated the use of the :latest tag as it seeds confusion
