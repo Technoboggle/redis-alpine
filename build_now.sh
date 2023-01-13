@@ -3,8 +3,8 @@
 owd="`pwd`"
 cd "$(dirname "$0")"
 
-redis_ver="7.0.6"
-alpine_ver="3.17.0"
+redis_ver="7.0.7"
+alpine_ver="3.17.1"
 
 # Setting File permissions
 xattr -c .git

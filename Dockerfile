@@ -1,14 +1,14 @@
-FROM alpine:3.17.0
+FROM alpine:3.17.1
 
 # Technoboggle Build time arguments.
 ARG BUILD_DATE
 ARG VCS_REF
 ARG BUILD_VERSION
 
-ENV ALPINE_VERSION 3.17.0
-ENV REDIS_VERSION 7.0.6
+ENV ALPINE_VERSION 3.17.1
+ENV REDIS_VERSION 7.0.7
 ENV REDIS_DOWNLOAD_URL "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
-ENV REDIS_DOWNLOAD_SHA 7b33a7e890d13e27af1f246acb16312669ad8a1d56ce8f807dfbcd3c09aa7bb3 
+ENV REDIS_DOWNLOAD_SHA 8d327d7e887d1bb308fc37aaf717a0bf79f58129e3739069aaeeae88955ac586 
 
 # Labels.
 LABEL maintainer="edward.finlayson@btinternet.com"
