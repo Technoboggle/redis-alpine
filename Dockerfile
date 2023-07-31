@@ -1,14 +1,14 @@
-FROM alpine:3.17.1
+FROM alpine:3.18.2
 
 # Technoboggle Build time arguments.
 ARG BUILD_DATE
 ARG VCS_REF
 ARG BUILD_VERSION
 
-ENV ALPINE_VERSION 3.17.1
-ENV REDIS_VERSION 7.0.7
+ENV ALPINE_VERSION 3.18.2
+ENV REDIS_VERSION 7.0.9
 ENV REDIS_DOWNLOAD_URL "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
-ENV REDIS_DOWNLOAD_SHA 8d327d7e887d1bb308fc37aaf717a0bf79f58129e3739069aaeeae88955ac586 
+ENV REDIS_DOWNLOAD_SHA f77135c2a47c9151d4028bfea3b34470ab4d324d1484f79a84c6f32a3cfb9f65
 
 # Labels.
 LABEL maintainer="edward.finlayson@btinternet.com"
@@ -58,6 +58,7 @@ RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
   ; \
   \
   wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
+  echo "Expecting: $(sha256sum *redis.tar.gz)"; \
   echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c -; \
   mkdir -p /usr/src/redis; \
   tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1; \
