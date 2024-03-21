@@ -7,10 +7,10 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG BUILD_VERSION
 
-ENV ALPINE_VERSION=${ALPINE_VERSION}
-ENV REDIS_VERSION=${REDIS_VERSION}
-ENV REDIS_DOWNLOAD_URL=${REDIS_DOWNLOAD_URL}
-ENV REDIS_DOWNLOAD_SHA=${REDIS_SHA}
+ARG ALPINE_VERSION=${ALPINE_VERSION}
+ARG REDIS_VERSION=${REDIS_VERSION}
+ARG REDIS_DOWNLOAD_URL=${REDIS_DOWNLOAD_URL}
+ARG REDIS_DOWNLOAD_SHA=${REDIS_SHA}
 
 # Labels.
 LABEL maintainer=${MAINTAINER}
@@ -56,10 +56,8 @@ RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
 #   + wget -O redis.tar.gz http://download.redis.io/releases/redis-6.0.6.tar.gz
 #   Connecting to download.redis.io (45.60.121.1:80)
 #   wget: bad header line:     XxhODalH: btu; path=/; Max-Age=900
-    wget \
-  ;
-
-RUN wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
+    wget;
+RUN wget -O redis.tar.gz "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz" && \
   echo "Expecting: $(sha256sum *redis.tar.gz)"; \
   echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c -; \
   mkdir -p /usr/src/redis; \
