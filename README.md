@@ -1,8 +1,5 @@
 # Redis Alpine
 
-[![Build Status](https://img.shields.io/travis/your-username/redis-alpine.svg)](https://travis-ci.org/your-username/redis-alpine)
-[![Snyk Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/your-username/redis-alpine.svg)](https://snyk.io/test/github/your-username/redis-alpine)
-
 This repository contains code to build a container image for Redis using Alpine Linux as the base image.
 
 ## Prerequisites
