@@ -1,33 +1,35 @@
-FROM alpine:3.18.2
+ARG ALPINE_VERSION
+
+FROM alpine:${ALPINE_VERSION}
 
 # Technoboggle Build time arguments.
 ARG BUILD_DATE
 ARG VCS_REF
 ARG BUILD_VERSION
 
-ENV ALPINE_VERSION 3.18.2
-ENV REDIS_VERSION 7.0.9
-ENV REDIS_DOWNLOAD_URL "http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz"
-ENV REDIS_DOWNLOAD_SHA f77135c2a47c9151d4028bfea3b34470ab4d324d1484f79a84c6f32a3cfb9f65
+ENV ALPINE_VERSION=${ALPINE_VERSION}
+ENV REDIS_VERSION=${REDIS_VERSION}
+ENV REDIS_DOWNLOAD_URL=${REDIS_DOWNLOAD_URL}
+ENV REDIS_DOWNLOAD_SHA=${REDIS_SHA}
 
 # Labels.
-LABEL maintainer="edward.finlayson@btinternet.com"
-LABEL net.technoboggle.authorname="Edward Finlayson" \
-      net.technoboggle.authors="edward.finlayson@btinternet.com" \
-      net.technoboggle.version="0.1" \
-      net.technoboggle.description="This image builds a Redis server on Alpine" \
-      net.technoboggle.buildDate="${BUILD_DATE}"
+LABEL maintainer=${MAINTAINER}
+LABEL net.technoboggle.authorname=${AUTHORNAME} \
+      net.technoboggle.authors=${AUTHORS} \
+      net.technoboggle.version=${VERSION} \
+      net.technoboggle.description=${DESCRIPTION} \
+      net.technoboggle.buildDate=${BUILD_DATE}
 
-LABEL org.label-schema.schema-version="1.0"
-LABEL org.label-schema.build-date="${BUILD_DATE}"
-LABEL org.label-schema.name="Technoboggle/redis-alpine"
-LABEL org.label-schema.description="Technoboggle lightweight Redis node"
-LABEL org.label-schema.url="http://technoboggle.com/"
-LABEL org.label-schema.vcs-url="https://github.com/Technoboggle/redis-alpine"
-LABEL org.label-schema.vcs-ref="${VCS_REF}"
-LABEL org.label-schema.vendor="WSO2"
-LABEL org.label-schema.version="${BUILD_VERSION}"
-LABEL org.label-schema.docker.cmd="docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:${REDIS_VERSION}-${ALPINE_VERSION}"
+LABEL org.label-schema.schema-version=${SCHEMAVERSION}
+LABEL org.label-schema.build-date=${BUILD_DATE}
+LABEL org.label-schema.name=${NAME}
+LABEL org.label-schema.description=${DESCRIPTION}
+LABEL org.label-schema.url=${URL}
+LABEL org.label-schema.vcs-url=${VCS_URL}
+LABEL org.label-schema.vcs-ref=${VSC_REF}
+LABEL org.label-schema.vendor=${VENDOR}
+LABEL org.label-schema.version=${BUILDVERSION}
+LABEL org.label-schema.docker.cmd=${DOCKERCMD}
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
@@ -55,9 +57,9 @@ RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
 #   Connecting to download.redis.io (45.60.121.1:80)
 #   wget: bad header line:     XxhODalH: btu; path=/; Max-Age=900
     wget \
-  ; \
-  \
-  wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
+  ;
+
+RUN wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
   echo "Expecting: $(sha256sum *redis.tar.gz)"; \
   echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c -; \
   mkdir -p /usr/src/redis; \
