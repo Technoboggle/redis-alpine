@@ -2,8 +2,7 @@
 
 [![Technoboggle Rules](https://img.shields.io/badge/technoboggle-rules-f08060)]
 
-[![Docker Automated Build](https://img.shields.io/github/automated/technoboggle/redis-alpine?icon=docker&label=automated_build)]
-[![Docker Build Status](https://img.shields.io/github/last-commit/technoboggle/redis-alpine?icon=docker&label=build_status)]
+[![Docker Automated Build](https://img.shields.io/docker/automated/technoboggle/redis-alpine)]
 [![Docker Pulls](https://badgen.net/docker/pulls/technoboggle/redis-alpine?icon=docker&label=pulls)](https://hub.docker.com/r/technoboggle/redis-alpine/)
 [![Docker Stars](https://badgen.net/docker/stars/technoboggle/redis-alpine?icon=docker&label=stars)](https://hub.docker.com/r/technoboggle/redis-alpine/)
 [![Docker Image Size](https://badgen.net/docker/size/technoboggle/redis-alpine?icon=docker&label=image%20size)](https://hub.docker.com/r/technoboggle/redis-alpine/)
