@@ -1,6 +1,6 @@
-ALPINE_VERSION=3.19.1
-REDIS_VERSION=7.2.4
-REDIS_SHA=3e2b196d6eb4ddb9e743088bfc2915ccbb42d40f5a8a3edd8cb69c716ec34be7
+ALPINE_VERSION="3.19.1"
+REDIS_VERSION="7.2.4"
+REDIS_SHA="3e2b196d6eb4ddb9e743088bfc2915ccbb42d40f5a8a3edd8cb69c716ec34be7"
 
 MAINTAINER="edward.finlayson@btinternet.com"
 AUTHORNAME="Edward Finlayson"
@@ -11,6 +11,9 @@ SCHEMAVERSION="1.0"
 NAME="Technoboggle/redis-alpine"
 DESCRIPTION="Technoboggle lightweight Redis node"
 URL="http://technoboggle.com/"
-VCS_URL="https://github.com/Technoboggle/redis-alpine"
+VCS_URL="https://github.com/technoboggle/redis-alpine"
 VENDOR="WSO2"
-BUILDVERSION="${BUILD_VERSION}"
+BUILD_VERSION="0.1"
+BUILD_DATE=""
+VCS_REF=""
+DOCKERCMD=""

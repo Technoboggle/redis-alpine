@@ -12,6 +12,27 @@ ARG REDIS_VERSION=${REDIS_VERSION}
 ARG REDIS_DOWNLOAD_URL=${REDIS_DOWNLOAD_URL}
 ARG REDIS_DOWNLOAD_SHA=${REDIS_SHA}
 
+
+# Technoboggle Build time arguments.
+ARG BUILD_DATE="${BUILD_DATE}"
+ARG VCS_REF="${VCS_REF}"
+ARG BUILD_VERSION="${BUILD_VERSION}"
+
+ARG POSTFIX_VERSION="${POSTFIX_VERSION}"
+ARG MAINTAINER="${MAINTAINER}"
+ARG AUTHORNAME="${AUTHORNAME}"
+ARG AUTHORS="${AUTHORS}"
+ARG VERSION="${VERSION}"
+
+ARG SCHEMAVERSION="${SCHEMAVERSION}"
+ARG NAME="${NAME}"
+ARG DESCRIPTION="${DESCRIPTION}"
+ARG URL="${URL}"
+ARG VCS_URL="${VCS_URL}"
+ARG VENDOR="${VENDOR}"
+ARG BUILDVERSION="${BUILDVERSION}"
+
+
 # Labels.
 LABEL maintainer=${MAINTAINER}
 LABEL net.technoboggle.authorname=${AUTHORNAME} \
@@ -32,7 +53,10 @@ LABEL org.label-schema.version=${BUILDVERSION}
 LABEL org.label-schema.docker.cmd=${DOCKERCMD}
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
+RUN apk update --no-cache && \
+    apk upgrade --no-cache && \
+  \
+  addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
 # alpine already has a gid 999, so we'll use the next id
   \
     apk add --no-cache \
@@ -40,7 +64,6 @@ RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 999 redis;\
     'su-exec>=0.2' \
 # add tzdata for https://github.com/docker-library/redis/issues/138
     tzdata; \
-  \
   \
     set -eux; \
     apk --no-cache upgrade musl &&\

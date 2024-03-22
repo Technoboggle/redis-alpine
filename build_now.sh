@@ -3,16 +3,26 @@
 owd="$(pwd)"
 cd "$(dirname "$0")" || exit
 
-if [ -f .env ]; then
-    export $(cat .env | xargs)
+BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+VCS_REF="$(git rev-parse --verify HEAD)"
+
+export BUILD_DATE
+export VCS_REF
+
+sed -i.bu -E 's/BUILD_DATE=".*"/BUILD_DATE="'"${BUILD_DATE}"'"/g' env.hcl
+sed -i.bu -E 's/VCS_REF=".*"/VCS_REF="'"${VCS_REF}"'"/g' env.hcl
+
+if [ -f env.hcl ]; then
+    export $(cat env.hcl | xargs)
 fi
 
 if [ -f .perms ]; then
     export $(cat .perms | xargs)
 fi
+DOCKERCMD='docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:'"${REDIS_VERSION}-${ALPINE_VERSION}"
+export DOCKERCMD
 
-export DOCKERCMD="docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:${REDIS_VERSION}-${ALPINE_VERSION}"
-echo ${ALPINE_VERSION}
+sed -i.bu -E 's#DOCKERCMD=".*"#DOCKERCMD="'"${DOCKERCMD}"'"#g' env.hcl
 
 # Setting File permissions
 xattr -c .git
@@ -29,18 +39,13 @@ docker buildx create --name tb_redis_builder --use --bootstrap
 
 docker login -u="${DOCKER_USER}" -p="${DOCKER_PAT}"
 
-docker buildx build -f Dockerfile \
-    --platform linux/arm64,linux/amd64,linux/amd64/v2,linux/386,linux/armhf,linux/s390x,linux/ppc64le \
-    -t technoboggle/redis-alpine:"${REDIS_VERSION}-${ALPINE_VERSION}" \
-    --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
-    --build-arg VCS_REF="$(git rev-parse --verify HEAD)" \
-    --build-arg ALPINE_VERSION="${ALPINE_VERSION}" \
-    --progress=plain \
-    --force-rm \
-    --no-cache \
-    --push .
+docker buildx bake -f docker-bake.hcl -f env.hcl --no-cache --push
 
-# --env-file .env \
+sed -i.bu -E 's/BUILD_DATE=".*"/BUILD_DATE=""/g' env.hcl
+sed -i.bu -E 's/VCS_REF=".*"/VCS_REF=""/g' env.hcl
+sed -i.bu -E 's/DOCKERCMD=".*"/DOCKERCMD=""/g' env.hcl
+
+rm -f env.hcl.bu
 
 docker run -it -d --rm -p 16279:6279 --rm --name myredis technoboggle/redis-alpine:"${REDIS_VERSION}-${ALPINE_VERSION}"
 docker container stop -t 10 myredis

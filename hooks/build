@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ -f ../env.hcl ]; then
+    export $(cat ../env.hcl | xargs)
+fi
+
+DOCKERCMD='docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:'"${REDIS_VERSION}-${ALPINE_VERSION}"
+BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+VCS_REF="$SOURCE_COMMIT"
+
+export DOCKERCMD
+export BUILD_DATE
+export VCS_REF
+
+docker build \
+    --build-arg ALPINE_VERSION="$ALPINE_VERSION" \
+    --build-arg REDIS_VERSION="$REDIS_VERSION" \
+    --build-arg REDIS_SHA="$REDIS_SHA" \
+    --build-arg MAINTAINER="$MAINTAINER" \
+    --build-arg AUTHORNAME="$AUTHORNAME" \
+    --build-arg AUTHORS="$AUTHORS" \
+    --build-arg VERSION="$VERSION" \
+    --build-arg SCHEMAVERSION="$SCHEMAVERSION" \
+    --build-arg NAME="$NAME" \
+    --build-arg DESCRIPTION="$DESCRIPTION" \
+    --build-arg URL="$URL" \
+    --build-arg VCS_URL="$VCS_URL" \
+    --build-arg VENDOR="$VENDOR" \
+    --build-arg BUILD_VERSION="$BUILD_VERSION" \
+    --build-arg BUILD_DATE="$BUILD_DATE" \
+    --build-arg VCS_REF="$VCS_REF" \
+    --build-arg DOCKERCMD="$DOCKERCMD" \
+    -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" .
