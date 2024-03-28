@@ -40,4 +40,4 @@ docker build \
     --build-arg VCS_REF="$VCS_REF" \
     --build-arg DOCKERCMD="$DOCKERCMD" \
     -t "technoboggle/redis-alpine:BUILD_TEST-DO_NOT_USE" \
-    -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" .
+    -f "$DOCKERFILE_PATH" .
