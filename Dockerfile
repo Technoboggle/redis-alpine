@@ -62,8 +62,10 @@ RUN apk update --no-cache && \
 # grab su-exec for easy step-down from root
     'su-exec>=0.2' \
 # add tzdata for https://github.com/docker-library/redis/issues/138
-    tzdata; \
-  \
+    tzdata \
+    openssl \
+    openssh-keygen; \
+    \
     set -eux; \
     apk --no-cache upgrade musl &&\
     apk add --no-cache --virtual .build-deps \

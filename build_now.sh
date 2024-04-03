@@ -12,14 +12,17 @@ export VCS_REF
 sed -i.bu -E 's/BUILD_DATE=".*"/BUILD_DATE="'"${BUILD_DATE}"'"/g' env.hcl
 sed -i.bu -E 's/VCS_REF=".*"/VCS_REF="'"${VCS_REF}"'"/g' env.hcl
 
-DOCKERCMD='docker run -it -d -p 16379:6379 --rm --name myredis technoboggle/redis-alpine:'"${REDIS_VERSION}-${ALPINE_VERSION}"
-export DOCKERCMD
-
-sed -i.bu -E 's#DOCKERCMD=".*"#DOCKERCMD="'"${DOCKERCMD}"'"#g' env.hcl
-
 if [ -f env.hcl ]; then
-    export $(cat env.hcl | xargs)
+    while IFS= read -r line; do
+        export "$line"
+    done <env.hcl
 fi
+
+DOCKERCMD='docker run -it -d --rm -p 6279:6279 --name myredis technoboggle/redis-alpine:'"${REDIS_VERSION//\"/}-${ALPINE_VERSION//\"/}"
+
+sed -i.bu -E 's#DOCKERCMD=".*"#DOCKERCMD="'"${DOCKERCMD//\"/}"'"#g' env.hcl
+
+export DOCKERCMD
 
 if [ -f .perms ]; then
     export $(cat .perms | xargs)
