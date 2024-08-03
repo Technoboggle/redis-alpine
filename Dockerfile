@@ -8,8 +8,8 @@ ARG VCS_REF
 ARG BUILD_VERSION
 
 ARG REDIS_VERSION=${REDIS_VERSION}
-ARG REDIS_DOWNLOAD_URL=${REDIS_DOWNLOAD_URL}
-ARG REDIS_DOWNLOAD_SHA=${REDIS_SHA}
+
+
 
 
 # Technoboggle Build time arguments.
@@ -17,7 +17,7 @@ ARG BUILD_DATE="${BUILD_DATE}"
 ARG VCS_REF="${VCS_REF}"
 ARG BUILD_VERSION="${BUILD_VERSION}"
 
-ARG POSTFIX_VERSION="${POSTFIX_VERSION}"
+
 ARG MAINTAINER="${MAINTAINER}"
 ARG AUTHORNAME="${AUTHORNAME}"
 ARG AUTHORS="${AUTHORS}"
@@ -46,10 +46,10 @@ LABEL org.label-schema.name=${NAME}
 LABEL org.label-schema.description=${DESCRIPTION}
 LABEL org.label-schema.url=${URL}
 LABEL org.label-schema.vcs-url=${VCS_URL}
-LABEL org.label-schema.vcs-ref=${VSC_REF}
+LABEL org.label-schema.vcs-ref=${VCS_REF}
 LABEL org.label-schema.vendor=${VENDOR}
 LABEL org.label-schema.version=${BUILDVERSION}
-LABEL org.label-schema.docker.cmd=${DOCKERCMD}
+
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN apk update --no-cache && \
